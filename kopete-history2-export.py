@@ -29,7 +29,7 @@ import xml.etree.ElementTree as ET
 
 
 def export(accountId, dbPath, exportDir):
-    conn = sqlite3.connect(os.path.join(expanduser("~"), dbPath), detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
+    conn = sqlite3.connect(dbPath, detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
     cursor = conn.cursor()
     filesSql = """SELECT h1.other_id, strftime('%%Y-%%m', h1.datetime) AS day 
                     FROM history h1 
@@ -95,7 +95,7 @@ if len(sys.argv) < 3:
 
 accountId = sys.argv[1]
 exportDir = sys.argv[2]
-dbPath = ".kde4/share/apps/kopete/kopete_history.db"
+dbPath = os.path.join(expanduser("~"), ".kde4/share/apps/kopete/kopete_history.db");
 
 if not os.path.exists(exportDir):
     os.makedirs(exportDir)
